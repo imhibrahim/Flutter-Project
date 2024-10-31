@@ -1,3 +1,4 @@
+import 'package:app1/Screen/ForgetPassword.dart';
 import 'package:app1/Screen/Register.dart';
 import 'package:app1/Screen/loginLogic.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -58,7 +59,7 @@ class _LoginState extends State<Login> {
         Image.asset("assest/images/user.png",height: 80,),
 
         // Spacer to push the rest of the content down
-        SizedBox(height: 80), // Space between image and input fields
+        SizedBox(height: 50), // Space between image and input fields
         
         // Input fields
         TextFormField(
@@ -107,6 +108,16 @@ class _LoginState extends State<Login> {
       color: const Color.fromARGB(211, 0,12, 0)// Adjust the font size
     ),),
         ),
+         SizedBox(
+              height: 21,
+        
+            ),
+            TextButton(onPressed:(){
+Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Forgetpassword()),
+);
+            }, child: Text("Forget Password ...!!")
+            )
+
       ],
     ),
   ),
