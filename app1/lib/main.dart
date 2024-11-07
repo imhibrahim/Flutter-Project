@@ -7,6 +7,7 @@ import 'package:app1/Screen/User.dart';
 import 'package:app1/Screen/loginLogic.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
@@ -54,8 +55,9 @@ class MyApp extends StatelessWidget {
       ),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
            //home:Register(),
-           home:Login(),
-        
+          // home:Login(),
+         home:Admin(),
+         
            //home:Start(),
        
        //All Routs
@@ -64,6 +66,7 @@ class MyApp extends StatelessWidget {
         '/Register':(context)=>Register(),
         '/Admin':(context)=>Admin(),
         '/User':(context)=>UserPage(),
+        
        },
 
          

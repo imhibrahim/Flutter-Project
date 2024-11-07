@@ -1,21 +1,20 @@
-import 'package:app1/Screen/AllUsers.dart';
 import 'package:app1/Screen/Cart.dart';
+import 'package:flutter/material.dart';
+import 'package:app1/Screen/AllUsers.dart';
 import 'package:app1/Screen/Category.dart';
 import 'package:app1/Screen/Feedback.dart';
 import 'package:app1/Screen/Product.dart';
 import 'package:app1/Screen/Register.dart';
 import 'package:app1/Screen/Wishlist.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
-class Admin extends StatefulWidget {
-  const Admin({super.key});
+class Feedbackpage extends StatefulWidget {
+  const Feedbackpage({super.key});
 
   @override
-  State<Admin> createState() => _AdminState();
+  State<Feedbackpage> createState() => _FeedbackpageState();
 }
 
-class _AdminState extends State<Admin> {
+class _FeedbackpageState extends State<Feedbackpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +127,6 @@ body: Center(
     )
 
 ),
-);
-    
+);;
   }
 }
