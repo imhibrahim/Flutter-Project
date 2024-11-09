@@ -1,5 +1,8 @@
 
 import 'package:app1/Screen/Admin.dart';
+import 'package:app1/Screen/Category.dart';
+import 'package:app1/Screen/Category_insert.dart';
+import 'package:app1/Screen/Edit_Category.dart';
 import 'package:app1/Screen/Login.dart';
 import 'package:app1/Screen/Register.dart';
 import 'package:app1/Screen/Starting.dart';
@@ -20,7 +23,8 @@ await Firebase.initializeApp(
   projectId: "my-project-42fdb",
   storageBucket: "my-project-42fdb.appspot.com",
   messagingSenderId: "348753719901",
-  appId: "1:348753719901:web:c52f258ca3330f82e313b4"),
+  appId: "1:348753719901:web:c52f258ca3330f82e313b4",
+  databaseURL: "https://my-project-42fdb-default-rtdb.firebaseio.com/"),
 );
   runApp(const MyApp());
 }
@@ -56,8 +60,9 @@ class MyApp extends StatelessWidget {
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
            //home:Register(),
           // home:Login(),
-         home:Admin(),
-         
+        // home:Admin(),
+         home:Add_Product(),
+       // home: Categories(),
            //home:Start(),
        
        //All Routs
@@ -66,6 +71,7 @@ class MyApp extends StatelessWidget {
         '/Register':(context)=>Register(),
         '/Admin':(context)=>Admin(),
         '/User':(context)=>UserPage(),
+        
         
        },
 
