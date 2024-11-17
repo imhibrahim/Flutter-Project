@@ -1,4 +1,6 @@
 import 'package:app1/Screen/Cart.dart';
+import 'package:app1/Screen/productList.dart';
+import 'package:app1/Screen/productsCard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -64,7 +66,7 @@ final DatabaseRef =FirebaseDatabase.instance.ref('Post');
               leading: Icon(Icons.production_quantity_limits),
               title: Text("Product"),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Product()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductList()));
               },
             ),
             ListTile(
@@ -93,6 +95,13 @@ final DatabaseRef =FirebaseDatabase.instance.ref('Post');
               title: Text("Cart"),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => Cart()));
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.shopping_bag),
+              title: Text("Products card"),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductCard()));
               },
             ),
           ],
