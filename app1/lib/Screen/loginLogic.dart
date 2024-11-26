@@ -29,7 +29,7 @@ else{
     //clear feilds
   
     //navigator
-  Navigator.pushNamed(context, '/User');
+  Navigator.pushNamed(context,'/bottomnavigator');
 }
 
 }

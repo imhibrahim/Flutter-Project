@@ -7,7 +7,9 @@ import 'package:app1/Screen/Login.dart';
 import 'package:app1/Screen/Register.dart';
 import 'package:app1/Screen/Starting.dart';
 import 'package:app1/Screen/User.dart';
+import 'package:app1/Screen/botttom_nav.dart';
 import 'package:app1/Screen/loginLogic.dart';
+import 'package:app1/Screen/onboard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -61,9 +63,11 @@ class MyApp extends StatelessWidget {
            //home:Register(),
           // home:Login(),
         // home:Admin(),
-         home:Add_Product(),
+         //home:Add_Product(),
        // home: Categories(),
            //home:Start(),
+           //home:Onboard(),
+           home:BottomNav(),
        
        //All Routs
        routes: {
@@ -71,6 +75,7 @@ class MyApp extends StatelessWidget {
         '/Register':(context)=>Register(),
         '/Admin':(context)=>Admin(),
         '/User':(context)=>UserPage(),
+        '/bottomnavigator':(context)=>BottomNav()
         
         
        },
