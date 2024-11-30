@@ -4,12 +4,14 @@ import 'package:app1/Screen/Category.dart';
 import 'package:app1/Screen/Category_insert.dart';
 import 'package:app1/Screen/Edit_Category.dart';
 import 'package:app1/Screen/Login.dart';
+import 'package:app1/Screen/Product.dart';
 import 'package:app1/Screen/Register.dart';
 import 'package:app1/Screen/Starting.dart';
 import 'package:app1/Screen/User.dart';
 import 'package:app1/Screen/botttom_nav.dart';
 import 'package:app1/Screen/loginLogic.dart';
 import 'package:app1/Screen/onboard.dart';
+import 'package:app1/Screen/productsCard.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -66,8 +68,9 @@ class MyApp extends StatelessWidget {
          //home:Add_Product(),
        // home: Categories(),
            //home:Start(),
-           //home:Onboard(),
-           home:BottomNav(),
+           home:Onboard(),
+          //  home:BottomNav(),  
+          //  home:ProductCard(),
        
        //All Routs
        routes: {

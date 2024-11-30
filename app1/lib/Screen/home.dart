@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-//import 'package:app1/Screen/details.dart';
-import 'package:app1/widget/widget_support.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,212 +12,215 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  bool icecream  = false, pizza = false, salad = false, burger = false;
-
+   final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Determine the number of columns based on screen width
+    int crossAxisCount = screenWidth < 600
+        ? 2
+        : screenWidth < 900
+            ? 3
+            : 4;
+
     return Scaffold(
-      body: Container(
-          margin: EdgeInsets.only(top: 20.0,left: 20.0, ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Hello Dear,", style: AppWidget.boldTextFeildStyle(),),
-                  Container(
-                    margin: EdgeInsets.only(right: 20.0),
-                    padding: EdgeInsets.all(3),
-              decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(8)),
-              child: Icon(Icons.shopping_cart, color: Colors.white),
-            ),
-              ],
-            ),
-            SizedBox(height: 20.0,),  
-             Text("Delicious Food,", style: AppWidget.HeadLineTextFeildStyle(),),
-           Text("Discover and Get Great Food,", style: AppWidget.LightTextFeildStyle()),
-           SizedBox(height: 20.0,),
-          Container(
-            margin: EdgeInsets.only(right: 20.0),
-            child: showItem()),
-          SizedBox(height: 30.0,),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(children: [
-              GestureDetector(
-                onTap: (){
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => Details()));
-                },
-                child: Container(
-                  margin: EdgeInsets.all(5),
-                  child: Material(
-                     elevation: 5.0,
-                     borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      padding: EdgeInsets.all(14),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                        Image.asset("images/salad2.png", height: 150, width: 150, fit: BoxFit.cover,),
-                        Text("Veggie Taco Hash", style: AppWidget.SemiBoldTextFeildStyle(),),
-                        SizedBox(height: 5.0,),
-                           Text("Fresh And Healthy", style: AppWidget.LightTextFeildStyle(),),
-                            SizedBox(height: 5.0,),
-                           Text("\$25", style: AppWidget.SemiBoldTextFeildStyle(),)
-                      ],),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Hello Dear,",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
-                ),
-              ),
-              SizedBox(width: 15.0,),
-                Container(
-                  margin: EdgeInsets.all(4),
-                  child: Material(
-                   elevation: 5.0,
-                   borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    padding: EdgeInsets.all(14),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      Image.asset("images/salad2.png", height: 150, width: 150, fit: BoxFit.cover,),
-                      Text("Mix Veg Salad", style: AppWidget.SemiBoldTextFeildStyle(),),
-                      SizedBox(height: 5.0,),
-                         Text("Spicy with Onion ", style: AppWidget.LightTextFeildStyle(),),
-                          SizedBox(height: 5.0,),
-                         Text("\$28", style: AppWidget.SemiBoldTextFeildStyle(),)
-                    ],),
+                  Container(
+                    // margin: const EdgeInsets.only(right: 20.0),
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(Icons.shopping_cart, color: Colors.white),
                   ),
-                                ),
-                ),
-            ],),
-          ),
-          SizedBox(height: 30.0,),
-          Container(
-            margin: EdgeInsets.only(right: 10.0),
-            child: Material(
-              elevation: 5.0,
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                padding: EdgeInsets.all(5), 
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset("images/salad2.png",height: 120, width: 120, fit: BoxFit.cover, ),
-                    SizedBox(width: 20.0,),
-                    Column(children: [
-                       Container(
-                        width: MediaQuery.of(context).size.width/2,
-                        child: Text("Mediterranean Chickpea Saled", style: AppWidget.SemiBoldTextFeildStyle(),),
-                        ),
-                        SizedBox(height: 5.0,),
-                       Container(
-                        width: MediaQuery.of(context).size.width/2,
-                        child: Text("Honey goot cheese", style: AppWidget.LightTextFeildStyle(),),
-                        ),
-                         SizedBox(height: 5.0,),
-                       Container(
-                        width: MediaQuery.of(context).size.width/2,
-                        child: Text("\$28", style: AppWidget.SemiBoldTextFeildStyle(),),
-                        ),
-                    ],),
-                  ],
-                ),
+                   Container(
+                    margin: const EdgeInsets.only(right: 20.0),
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    // child: const Icon(Icons.logout, color: Colors.white),
+                   child:   ElevatedButton(onPressed: () async {
+            await auth.signOut();
+            Navigator.pushNamed(context, '/Login');
+
+          }, child: Text("SignOut"))
+                  ),
+                ],
               ),
-            ),
+              const SizedBox(height: 20.0),
+              const Text(
+                "Delicious Food,",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const Text(
+                "Discover and Get Great Food,",
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+              const SizedBox(height: 20.0),
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance.collection('products').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  }
+
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(child: Text('No products found.'));
+                  }
+
+                  final products = snapshot.data!.docs;
+
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(10),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 0.7,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index].data() as Map<String, dynamic>;
+                      final productId = products[index].id;
+
+                      return Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          children: [
+                            product['Image'] != null
+                                ? Image.memory(
+                                    base64Decode(product['Image']),
+                                    height: 120,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Container(
+                                    height: 120,
+                                    width: double.infinity,
+                                    color: Colors.grey[300],
+                                  ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    product['protitle'] ?? 'No Title',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    product['Description'] ?? 'No Description',
+                                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Price: \$${product['price'] ?? 'N/A'}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.add_shopping_cart),
+                                        onPressed: () {
+                                          _addToCart(productId);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 30.0),
+            ],
           ),
-          ],
         ),
       ),
     );
   }
-  Widget showItem(){
-    return  Row(
-            mainAxisAlignment:  MainAxisAlignment.spaceBetween,
-            children: [
-            GestureDetector(
-              onTap: (){
-                icecream = true;
-                pizza = false;
-                 salad = false;
-                  burger = false;
-                  setState(() {
-                    
-                  });
-              },
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  decoration: BoxDecoration(color: icecream?Colors.black: Colors.white, borderRadius: BorderRadius.circular(10)),
-                  padding: EdgeInsets.all(8),
-                  child: Image.asset("images/ice-cream.png", height: 40, width: 40, fit: BoxFit.cover,color: icecream? Colors.white: Colors.black,),
-                ),
-              ),
-            ),
-             GestureDetector(
-              onTap: (){
-                icecream = false;
-                pizza = true;
-                 salad = false;
-                  burger = false;
-                  setState(() {
-                    
-                  });
-              },
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  decoration: BoxDecoration(color: pizza?Colors.black: Colors.white, borderRadius: BorderRadius.circular(10)),
-                  padding: EdgeInsets.all(8),
-                  child: Image.asset("images/pizza.png", height: 40, width: 40, fit: BoxFit.cover,color: pizza? Colors.white: Colors.black,),
-                ),
-              ),
-            ),
-             GestureDetector(
-              onTap: (){
-                icecream = false;
-                pizza = false;
-                 salad = true;
-                  burger = false;
-                  setState(() {
-                    
-                  });
-              },
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  decoration: BoxDecoration(color: salad?Colors.black: Colors.white, borderRadius: BorderRadius.circular(10)),
-                  padding: EdgeInsets.all(8),
-                  child: Image.asset("images/salad.png", height: 40, width: 40, fit: BoxFit.cover,color: salad? Colors.white: Colors.black,),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: (){
-                icecream = false;
-                pizza = false;
-                 salad = false;
-                  burger = true;
-                  setState(() {
-                    
-                  });
-              },
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  decoration: BoxDecoration(color: burger?Colors.black: Colors.white, borderRadius: BorderRadius.circular(10)),
-                  padding: EdgeInsets.all(8),
-                  child: Image.asset("images/burger.png", height: 40, width: 40, fit: BoxFit.cover,color: burger? Colors.white: Colors.black,),
-                ),
-              ),
-            ),
 
-           ],);
+  void _addToCart(String productId) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      Fluttertoast.showToast(msg: "User not logged in");
+      return;
+    }
+
+    String userId = user.uid;
+
+    CollectionReference cartRef =
+        FirebaseFirestore.instance.collection('user_cart').doc(userId).collection('products');
+
+    try {
+      var cartDoc = await cartRef.doc(productId).get();
+
+      if (cartDoc.exists) {
+        Fluttertoast.showToast(msg: "Product is already in your cart");
+      } else {
+        final product =
+            await FirebaseFirestore.instance.collection('products').doc(productId).get();
+
+        if (product.exists) {
+          var productData = product.data() as Map<String, dynamic>;
+          await cartRef.doc(productId).set({
+            'protitle': productData['protitle'],
+            'Description': productData['Description'],
+            'price': productData['price'],
+            'Image': productData['Image'],
+            'quantity': 1,
+            'addedAt': Timestamp.now(),
+          });
+
+          Fluttertoast.showToast(msg: "Product added to cart");
+        } else {
+          Fluttertoast.showToast(msg: "Product not found");
+        }
+      }
+    } catch (error) {
+      Fluttertoast.showToast(msg: "Error adding product to cart: $error");
+    }
   }
 }
